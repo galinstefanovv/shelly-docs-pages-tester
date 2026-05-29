@@ -13,8 +13,8 @@ const config = {
     v4: true,
   },
 
-  url: 'https://docs.sp.infn.dev',
-  baseUrl: '/',
+  url: 'https://galinstefanov.github.io',
+  baseUrl: '/shelly-docs-pages-tester/',
 
   onBrokenLinks: 'warn',
 
