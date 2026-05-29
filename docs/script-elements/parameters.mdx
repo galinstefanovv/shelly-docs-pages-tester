@@ -1,0 +1,58 @@
+---
+sidebar_position: 2
+id: parameters
+title: Using Parameters
+sidebar_label: Parameters
+---
+
+**Scene parameters** let you define values that can be edited directly from the UI. They make the automation easier to reuse, read and maintain. The main idea is that the parameters used in the script should be configurable by the user without touching the code. This keeps the script clean, avoids hard‑coded values and ensures consistent behavior across the entire automation.
+
+## Scene options
+
+Parameters are especially useful when a scene is created from a **[Template](https://docs.sp.infn.dev/ui-and-snippets/script-editor/parameters/#create-a-scene-with-parameters)**, because all configurable values automatically appear in the UI. This allows users to adjust how the scene behaves without modifying the script. Parameters work the same way whether the scene is created from a template or written manually.
+
+All parameter values appear in a dedicated configuration panel, making the scene easy to customize. See how to **[edit parameters](https://docs.sp.infn.dev/ui-and-snippets/script-editor/parameters/#edit-parameters)**
+
+:::info
+When creating a scene using a template, the parameters are **optional**
+:::
+
+## Why Parameters are useful
+
+Parameters provide information for all configurable values. Updating a parameter in one place immediately affects the entire Script logic.
+
+**Key benefits include:**
+
+- **Centralized configuration** - All adjustable values are grouped together.
+- **Cleaner logic** - Conditions and actions read directly from params.
+- **User-friendly editing** - Non‑technical users can modify behavior through the UI without touching the code.
+- **Reduced errors** - Avoids mismatched values or forgotten updates in multiple places.
+
+#### Example
+
+import BedroomTemp from "../appendix/examples-list/parameters/bedroom-temp-ac-control.mdx";
+
+<BedroomTemp />
+
+Each parameter defines a specific behavior or limit that the script relies on. Adjust these values to customize how the script operates.
+
+<img
+  src="/img/script-structure/edit-parameters.png"
+  alt="Edit scene parameters"
+  width="500"
+/>
+
+## Best practices
+
+- Group related parameters to make the configuration intuitive.
+- Use clear, descriptive names.
+- Avoid hard‑coded values - Always reference params where appropriate.
+- Document your parameters via comments.
+
+## More examples
+
+- **[Turn the light on when motion is detected](https://docs.sp.infn.dev/appendix/examples-list/active-time/turn-on-light-motion-detected)**
+- **[Car charge status](https://docs.sp.infn.dev/appendix/examples-list/notifications/car-charge-status)**
+- **[Weekend washing machine monitor](https://docs.sp.infn.dev/appendix/examples-list/global-variables/weekend-washing-machine-monitor)**
+- **[Blinds staggered close](https://docs.sp.infn.dev/appendix/examples-list/parameters/blinds-staggered-close)**
+- **[Lights staggered on](https://docs.sp.infn.dev/appendix/examples-list/time-conditions/lights-staggered-on)**

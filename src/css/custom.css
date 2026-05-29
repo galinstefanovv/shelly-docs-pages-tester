@@ -1,0 +1,74 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #4495d1;
+  --ifm-color-primary-dark: #2f86c9;
+  --ifm-color-primary-darker: #2b7fbe;
+  --ifm-color-primary-darkest: #23689c;
+  --ifm-color-primary-light: #5aa2d8;
+  --ifm-color-primary-lighter: #66abdc;
+  --ifm-color-primary-lightest: #86bde6;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme="dark"] {
+  --ifm-color-primary: #4495d1;
+  --ifm-color-primary-dark: #2f86c9;
+  --ifm-color-primary-darker: #2b7fbe;
+  --ifm-color-primary-darkest: #23689c;
+  --ifm-color-primary-light: #5aa2d8;
+  --ifm-color-primary-lighter: #66abdc;
+  --ifm-color-primary-lightest: #86bde6;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Navbar logo size */
+.navbar__logo {
+  height: 24px;
+  width: auto;
+}
+
+.navbar__brand {
+  margin-right: 4px !important;
+  margin-left: 4px;
+}
+
+/* Style for NOTE */
+.admonition-note {
+  border-left: 4px solid #4a90e2;
+  background-color: #eef6ff;
+}
+
+.admonition-note .admonition-title {
+  color: #1a5fb4;
+  font-weight: 600;
+}
+
+/* Style for WARNING */
+.admonition-warning {
+  border-left: 4px solid #e67e22;
+  background-color: #fff4e6;
+}
+
+.admonition-warning .admonition-title {
+  color: #c45a00;
+  font-weight: 600;
+}
+
+.hidden {
+  display: none;
+}
+
+.theme-admonition.theme-admonition-note {
+  --ifm-alert-background-color: rgba(114, 127, 156, 0.25);
+  --ifm-alert-border-color: #4d79ff;
+  --ifm-alert-color: #1a1a1a;
+  color: #1a1a1a;
+}

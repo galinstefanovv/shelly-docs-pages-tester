@@ -1,0 +1,68 @@
+---
+sidebar_position: 3
+id: time-triggers
+title: Time Triggers
+sidebar_label: Time Triggers
+---
+
+Time-based triggers let scenes run automatically at specific moments or intervals. There are four types: **Timer**, **Schedule**, **DateTime** and **Solar**. The examples below all use a `bedroomBlind` device to show how each trigger type fits a different timing need.
+
+## Timer Trigger
+
+`setTimerTrigger(minutes, handler)` - Repeats the action every N minutes.
+
+Closes the bedroom blind 30 minutes after the timer starts — useful as a safety reset after manual control.
+
+{/* prettier-ignore-start */}
+
+```js title="timer-trigger.js" file=../../scripts/timer-trigger.js
+
+```
+
+{/* prettier-ignore-end */}
+
+## Schedule Trigger
+
+`setScheduleTrigger(time, days, handler)` - Weekly schedule based on time and selected weekdays.
+
+Opens the bedroom blind at 7 AM every weekday morning.
+
+{/* prettier-ignore-start */}
+
+```js title="schedule-trigger.js" file=../../scripts/schedule-trigger.js
+
+```
+
+{/* prettier-ignore-end */}
+
+## DateTime Trigger
+
+`setDateTimeTrigger(date, time, handler)` - One-time trigger at a specific date and time. Date format: `"YYYY-MM-DD"`.
+
+import TurnOffDevices from "../../appendix/examples-list/time-conditions/turn-off-devices-specific-day.mdx";
+
+<TurnOffDevices />
+
+## Solar Trigger
+
+`setSolarTrigger(event, direction, time, handler)` - Triggers based on sunrise or sunset. The event is **sunrise** or **sunset**, the direction is **before** or **after**.
+
+Opens the bedroom blind 30 minutes before sunrise — lets natural light in gradually as the day starts.
+
+{/* prettier-ignore-start */}
+
+```js title="solar-trigger.js" file=../../scripts/solar-trigger.js
+
+```
+
+{/* prettier-ignore-end */}
+
+## More examples
+
+- **[Scheduled light activation](https://docs.sp.infn.dev/appendix/examples-list/time-conditions/scheduled-light-activation)**
+- **[Sunset light routine](https://docs.sp.infn.dev/appendix/examples-list/time-conditions/sunset-light-routine)**
+- **[Close blind on a specific date](https://docs.sp.infn.dev/appendix/examples-list/time-conditions/turn-off-devices-specific-day)**
+- **[Lights staggered on](https://docs.sp.infn.dev/appendix/examples-list/time-conditions/lights-staggered-on)**
+- **[Blinds staggered close](https://docs.sp.infn.dev/appendix/examples-list/time-conditions/blinds-staggered-close)**
+
+For creation through the UI, see this **[page](https://docs.sp.infn.dev/ui-and-snippets/script-editor/snippets/#time-triggers)**.

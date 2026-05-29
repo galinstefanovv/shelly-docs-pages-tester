@@ -1,0 +1,77 @@
+---
+sidebar_position: 9
+id: door-open-timestamps
+title: Track door opens within a time window
+sidebar_label: Track door opens within a time window
+---
+
+This script detects bursts of door opens and sends a phone notification when activity exceeds a configured threshold. Isolated opens are ignored — counting only begins once a second open occurs within a short burst gap. If the opens keep coming and exceed the limit within the tracking window, a notification is sent and the counter resets.
+
+```js title="door-open-timestamps.js" file=../../../scripts/door-open-timestamps.js
+
+```
+
+## How it works
+
+### State
+
+The script uses a single `global.state` object to persist data across trigger calls. Each field tracks a different aspect of the current burst:
+
+```js
+global.state = {
+    count: 0,        // Number of opens in the current burst
+    windowStart: 0,  // Timestamp of when the current window began
+    lastOpen: 0,     // Timestamp of the most recent open event
+};
+```
+
+- `count` — how many opens have been recorded in the active burst. Resets after a notification or when an isolated event starts a fresh burst.
+- `windowStart` — when the current tracking window started. Used to enforce the maximum window duration so a slow spread of events never triggers a false alert.
+- `lastOpen` — the timestamp of the last open. Compared against each new event to decide whether it continues an existing burst or starts a new one.
+
+### Ignoring isolated opens
+
+```js
+if (now - global.state.lastOpen > BURST_GAP_MS) {
+    global.state.count = 1;
+    global.state.windowStart = now;
+}
+```
+
+If the door hasn't opened recently (longer ago than `burstGapMinutes`), the event is treated as isolated and the counter resets to 1. This prevents a single open — or opens spread far apart — from accumulating toward the threshold.
+
+### Counting a burst
+
+```js
+} else {
+    if (global.state.count === 0) {
+        global.state.windowStart = now;
+    }
+    global.state.count++;
+}
+```
+
+If the open happens soon after the previous one, it's part of a burst. The window start is recorded on the first count of a new burst (`count === 0`), so the window clock only starts once a burst is confirmed.
+
+### Resetting an expired window
+
+```js
+if (now - global.state.windowStart > WINDOW_MS) {
+    global.state.count = 1;
+    global.state.windowStart = now;
+}
+```
+
+Even mid-burst, if the total window has expired, the count resets. This prevents a slow steady stream of opens over many hours from eventually triggering a notification.
+
+### Triggering the alert
+
+```js
+if (global.state.count > params.maxOpens) {
+    notify();
+    global.state.count = 0;
+    global.state.windowStart = 0;
+}
+```
+
+Once the burst count exceeds the threshold, a notification is sent and the state is cleared so a fresh burst can be detected afterward.

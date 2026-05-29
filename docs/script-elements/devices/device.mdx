@@ -1,0 +1,75 @@
+---
+title: Devices
+sidebar_position: 1
+---
+
+A device is a physical Shelly product that connects to your network and can be monitored and controlled through the editor. They provide controls (on/off, brightness, open/close), states (current status) and measurements (power, energy, temperature, humidity, etc., depending on the device model).
+
+## Device as a variable
+
+Each Shelly device should be represented by a variable. Declare it at the beginning or use the device interface to set it up:
+
+- **Room** - where the device is located. This helps organize devices and ensures the correct device list is shown.
+- **Device** - you want to associate with the variable. Only devices available in the selected room will appear.
+
+```js
+var bedroomTemperature = Shelly.getDevice("x"); // Bedroom Temperature
+```
+
+The device is now linked to the variable and can be used in scripts.
+
+:::important
+All devices used in a Scene must have their **own variables** defined at the beginning of every Script. This makes the device easy to access and control in the Script and ensures the automation can always use its current state.
+:::
+
+#### Example
+
+import TurnOnLights from "../../appendix/examples-list/active-time/turn-on-light-door-open.mdx";
+
+<TurnOnLights />
+
+## Device's channels
+
+The different Shelly devices could have multiple output and/or input channels.
+
+- **o1**, **o2**, **o3** and **o4** represent the output channels of a multi‑channel Shelly devices.
+  Each channel corresponds to a separate relay or logical output that can be controlled independently.
+- **i1**, **i2** - represent the input channels of Shelly devices.
+
+These channels appear in scripts as properties of the device object, allowing you to read states, control outputs and react to button event properties.
+
+:::warning
+Channels are specifically and different for relays and buttons.
+:::
+
+## Device's phases
+
+Some of the energy‑monitoring Shelly devices support three‑phase electrical systems. The device exposes three separate measurement channels, typically labeled:
+
+- **a**, **b**, **c** represent the phases of the device.
+
+### Electrical measurements (per phase)
+
+Each device phase is monitored independently, allowing the device to report voltage and power values per phase.
+
+#### Power (W)
+
+`aPower`, `bPower`, `cPower` - Instantaneous active power per phase.
+
+Use for load distribution, overload detection and consumption tracking.
+
+#### Voltage (V)
+
+`aVoltage`, `bVoltage`, `cVoltage` - Line voltage per phase.
+
+Use for phase imbalance detection, voltage drop analysis and supply stability monitoring.
+
+:::note
+For single-phase devices, use `power` and `voltage`.
+:::
+
+import DeviceProperties from "../device-properties/device-properties.mdx";
+
+<DeviceProperties />
+
+For creation through the UI, see this **[page](https://docs.sp.infn.dev/ui-and-snippets/script-editor/snippets/#devices)**.

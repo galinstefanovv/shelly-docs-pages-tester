@@ -1,0 +1,44 @@
+---
+sidebar_position: 5
+---
+
+# Active time
+
+Sets a time window when a script is allowed to run. Outside the window, the script wont't execute.
+
+**You set an interval in which a script can be performed:**
+
+- First, select a day(s) of the week using a checkbox (at least 1 day must be selected).
+- Then a start and end time interval is selected (at least 1 minute).
+
+:::important
+You should specify a time interval; otherwise, the default one will be used: (00:00 - 23:59), (Monday - Sunday).
+:::
+
+## Examples
+
+import CheckBatteryStatus from "../appendix/examples-list/devices/sensor/check-battery-status.mdx";
+
+<CheckBatteryStatus />
+
+import TurnOnLight from "../appendix/examples-list/time-conditions/turn-on-light-on-motion.mdx";
+
+<TurnOnLight />
+
+:::info
+`setActiveTime` defines a time window for the entire script. If the current time is outside that window, none of the script’s actions will run.
+
+`checkActiveTime` is used inside a handler to check whether the current moment is within a specific time window. It returns true or false, allowing you to decide whether to run an action only when the time condition is met.
+:::
+
+## More examples
+
+- **[Movie night](https://docs.sp.infn.dev/appendix/examples-list/active-time/movie-night)**
+- **[Turn off lights and AC when the door is closed](https://docs.sp.infn.dev/appendix/examples-list/active-time/turn-off-lights-and-ac)**
+- **[Turn the light on when motion is detected](https://docs.sp.infn.dev/appendix/examples-list/active-time/turn-on-light-motion-detected)**
+- **[Automation for cooking](https://docs.sp.infn.dev/appendix/examples-list/active-time/automation-for-cooking)**
+- **[Washing machine monitor](https://docs.sp.infn.dev/appendix/examples-list/global-variables/weekend-washing-machine-monitor)**
+- **[Kitchen lights hourly on at evening](https://docs.sp.infn.dev/appendix/examples-list/active-time/kitchen-lights-hourly-on-evening)**
+- **[Automatically control AC](https://docs.sp.infn.dev/appendix/examples-list/virtual-devices/automatically-control-ac)**
+
+For creation through the UI, see this **[page](https://docs.sp.infn.dev/ui-and-snippets/snippets/#active-time)**.

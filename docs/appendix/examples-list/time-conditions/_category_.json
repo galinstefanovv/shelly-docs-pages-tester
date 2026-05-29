@@ -1,0 +1,10 @@
+{
+  "label": "Time conditions",
+  "position": 10,
+  "link": {
+    "type": "generated-index",
+    "title": "Common examples with time conditions",
+    "description": "Some of the commonly used scripts are included here."
+  },
+  "className": "hidden"
+}

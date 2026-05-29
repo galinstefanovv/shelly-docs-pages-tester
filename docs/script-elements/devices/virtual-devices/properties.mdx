@@ -1,0 +1,68 @@
+---
+sidebar_position: 2
+id: properties
+title: Virtual components properties
+sidebar_label: Properties
+---
+
+Virtual components properties are the fields a virtual group exposes. They define what you can read in conditions and what you can set in actions. Virtual components expose different types of properties depending on their group type. These properties define what values the device can store, how automations can read them and what scripts can set or update.
+
+Below is an overview of each property type and its purpose.
+
+| **Virtual components** | **Common properties**                                     |
+| ---------------------- | --------------------------------------------------------- |
+| `textGroup`            | text                                                      |
+| `enumGroup`            | enum                                                      |
+| `numberGroup`          | number                                                    |
+| `booleanGroup`         | true, false                                               |
+| `buttonGroup`          | pressedLong, pressedOnce, pressedTwice, pressedThreeTimes |
+
+### 1. Text property (text)
+
+import VirtualText from "../../../appendix/examples-list/virtual-devices/virtual-text-group.mdx";
+
+<VirtualText />
+
+### 2. Enum property (enum)
+
+import VirtualEnum from "../../../appendix/examples-list/virtual-devices/virtual-enum-group.mdx";
+
+<VirtualEnum />
+
+### 3. Number property (number)
+
+import VirtualNumber from "../../../appendix/examples-list/virtual-devices/virtual-number-group.mdx";
+
+<VirtualNumber />
+
+### 4. Boolean property (true / false)
+
+import VirtualBoolean from "../../../appendix/examples-list/virtual-devices/virtual-boolean-group.mdx";
+
+<VirtualBoolean />
+
+### 5. Button property (press)
+
+import VirtualButton from "../../../appendix/examples-list/virtual-devices/virtual-button-group.mdx";
+
+<VirtualButton />
+
+## Available properties
+
+- **pressedOnce** - Fires when the button is pressed and released once. Ideal for simple toggles or single‑step actions.
+- **pressedTwice** - Fires when the user performs a quick double‑press. Useful for switching modes or activating secondary behaviors.
+- **pressedThreeTimes** - Fires on a triple‑press sequence. Often used for advanced or less frequent actions.
+- **pressedLong** - Fires when the button is held down for a defined duration. Suitable for dimming, gradual adjustments or safety‑related triggers.
+
+**Typical uses:**
+
+- Triggering different automations based on how the button is pressed.
+- Creating multi‑function controls:
+  - single press -> lights on.
+  - double press -> scene activation.
+- Implementing long‑press actions for continuous adjustments or special modes.
+- Providing a flexible input mechanism for virtual devices that need multiple interaction patterns.
+
+## Adding a property
+
+See this **[page](https://docs.sp.infn.dev/ui-and-snippets/virtual-devices/virtual-device-editor#adding-a-property)**.

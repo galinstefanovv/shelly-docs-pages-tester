@@ -1,0 +1,485 @@
+## Device properties
+
+:::tip
+Hover over any linked action or condition above to see the property you must use in the scripts.
+:::
+
+| Device | Triggers/Conditions | Actions |
+|---|---|---|
+| **[button](#button)** | [Pressed Once](#pressed-once "o1PressedOnce"), [Pressed Twice](#pressed-twice "o1PressedTwice"), [Pressed Three Times](#pressed-three-times "o1PressedThreeTimes"), [Long Pressed](#long-pressed "o1PressedLong"), [Battery Level](#battery-level "battery") | - |
+| **[emeter](#power-meter)** | [On](#o1on "o[1, 2, 3]On"), [Off](#o1off "o[1, 2, 3]Off"), [Voltage](#voltage "[a, b, c]Voltage"), [Power](#power "[a, b, c]Power"), [Total Power](#total-power "powerConsumption") | [On](#o1on-1 "o[1, 2, 3]On"), [Off](#o1off-1 "o[1, 2, 3]Off"), [Toggle](#toggle "o[1, 2, 3]Off = !o[1, 2, 3]Off")| 
+| **[light](#light)** | [On](#on "on"), [Off](#off "off"), [Brightness](#brightness "brightness") | [On](#on-1 "on"), [Off](#off-1 "off"), [Toggle](#toggle "o[1, 2, 3]Off = !o[1, 2, 3]Off"), [Brightness](#brightness-1 "brightness"), [Temperature](#temperature "temperature"), [White](#white "white"), [Red](#white "red"), [Blue](#white "blue"), [Green](#white "green") |
+| **[relay](#relay)** | [On](#o1on "o[1, 2, 3]On"), [Off](#o1off "o[1, 2, 3]Off"), [Pressed Once](#pressed-once "o1PressedOnce"), [Pressed Twice](#pressed-twice "o1PressedTwice"), [Pressed Three Times](#pressed-three-times "o1PressedThreeTimes"), [Long Pressed](#long-pressed "o1PressedLong"), [Connected](#connected "connected"), [i1Connected](#i1connected "i[1, 2, 3]Connected"), [i1NotConnected](#i1notconnected "i[1, 2, 3]NotConnected"), [Total Power](#total-power "powerConsumption"), [Power](#power "[a, b, c]Power") | [On](#o1on-1 "o[1, 2, 3]On"), [Off](#o1off-1 "o[1, 2, 3]Off"), [Toggle](#toggle "o[1, 2, 3]Off = !o[1, 2, 3]Off") |
+| **[relayRoller](#relay-roller)** | [On](#o1on "o[1, 2, 3]On"), [Off](#o1off "o[1, 2, 3]Off"), [Open Roller](#open "open"), [Close Roller](#closed "closed"), [Stop Roller](#stop "stop"), [Set Position Roller](#set-position "position"), [Connected](#connected "connected"), [i1Connected](#i1connected "i[1, 2, 3]Connected"), [i1NotConnected](#i1notconnected "i[1, 2, 3]NotConnected"), [Total Power](#total-power "powerConsumption"), [Power](#power "[a, b, c]Power") | [On](#o1on-1 "o[1, 2, 3]On"), [Off](#o1off-1 "o[1, 2, 3]Off"), [Toggle](#toggle "o[1, 2, 3]Off = !o[1, 2, 3]Off"), [Open Roller](#open-1 "open"), [Close Roller](#closed-1 "open = false"), [Stop Roller](#stop-1 "stop"), [Set Position Roller](#set-position-1 "position") |
+| **[sensor](#sensor)** | [Motion](#motion "motion"), [No Motion](#no-motion "noMotion"), [Door Opened](#open "open"), [Door Closed](#closed "closed"), [Tilt](#tilt "tilt"), [Battery Level](#battery-level "battery"), [Temperature](#temperature-1 "temperature"), [Humidity](#humidity "humidity"), [Illuminance](#illuminance "illuminance"), [Flood](#flood "flood"), [No Flood](#no-flood "noFlood"), [Smoke](#smoke "smoke"), [No Smoke](#no-smoke "noSmoke"), [Gas](#gas "gas"), [No Gas](#no-gas "noGas"), [Gas Concentration](#gas-concentration "gasConcentration")| - |
+
+:::note
+Because Shelly devices vary widely, the quickest way to see the exact properties of a specific device is to check its corresponding **Snippet**.
+:::
+
+### Action Options
+
+#### Delay
+
+Any action property on any device can be given a **delay** instead of a plain value. Pass an object with `value` and `delay` fields — the action will execute after the specified time. The delay is expressed in seconds (`s`) or minutes (`m`).
+
+```js
+var light = Shelly.getDevice("x");
+light.on = {
+  value: true,
+  delay: "5s"
+};
+```
+
+#### Timeout
+
+Actions on **relay** and **relayRoller** devices also support a **timeout** that automatically reverts the output to its previous state after the given time. Like delay, the value is expressed in seconds (`s`) or minutes (`m`).
+
+```js
+var toaster = Shelly.getDevice("x");
+toaster.o1On = {
+  value: true,
+  delay: "30s",
+  timeout: "6m"
+};
+```
+
+### Button
+
+#### `Triggers/Conditions`
+
+#### Pressed Once
+
+Fired when the device (button or relay) is pressed a single time.
+
+```javascript
+var button = Shelly.getDevice("x");
+Shelly.setTriggerOnce(button, "o1PressedOnce", handler); 
+```
+
+#### Pressed Twice
+
+Fired when the device (button or relay) is pressed twice in quick succession.
+
+```javascript
+var button = Shelly.getDevice("x");
+Shelly.setTriggerOnce(button, "o1PressedTwice", handler); 
+```
+
+#### Pressed Three Times
+
+Fired when the device (button or relay) is pressed three times in quick succession.
+
+```javascript
+var button = Shelly.getDevice("x");
+Shelly.setTriggerOnce(button, "o1PressedThreeTimes", handler); 
+```
+
+#### Long Pressed
+
+Fired when the device (button or relay) is held down.
+
+```javascript
+var button = Shelly.getDevice("x");
+Shelly.setTriggerOnce(button, "o1PressedLong", handler);
+```
+
+#### Battery Level
+
+Check whether battery of the device (button or sensor) is below a percentage threshold.
+
+```javascript
+var button = Shelly.getDevice("x");
+Shelly.setTriggerOnce(button, "battery < 30", handler);
+```
+
+### Emeter
+
+#### `Triggers/Conditions`
+
+#### o1On
+
+Fires when the device (emeter, relay or relayRoller) channel switches to оn.
+
+```js
+var emeter = Shelly.getDevice("x");
+Shelly.setTriggerOnce(emeter, "o1On", handler);
+```
+
+#### o1Off
+
+Fires when the device (emeter, relay or relayRoller) channel switches to оff.
+
+```js
+var emeter = Shelly.getDevice("x");
+Shelly.setTriggerOnce(emeter, "o1Off", handler);
+```
+
+#### Voltage
+
+Runs when the voltage on a specific channel matches the set value.
+
+```js
+var emeter = Shelly.getDevice("x");
+Shelly.setTriggerOnce(emeter, "aVoltage == 100", handler);
+```
+
+#### Total Power
+
+Triggers when the device (emeter, relay or relayRoller) total power reaches the current number.
+
+```js
+var emeter = Shelly.getDevice("x");
+Shelly.setTriggerOnce(emeter, "powerConsumption == 100", handler);
+```
+
+#### Power
+
+Starts when the device (emeter, relay or relayRoller) measured power goes below the given value.
+
+```js
+var emeter = Shelly.getDevice("x");
+Shelly.setTriggerOnce(emeter, "aPower < 300", handler);
+```
+
+#### `Actions`
+
+#### o1On
+
+Turns the device (emeter, relay or relayRoller) output channel on.
+
+```js
+var emeter = Shelly.getDevice("x");
+emeter.o1On = true;
+```
+
+#### o1Off
+
+Turns the device (emeter, relay or relayRoller) output channel off.
+
+```js
+var emeter = Shelly.getDevice("x");
+emeter.o1Off = true;
+```
+
+#### Toggle
+
+Switches the device (emeter, light, relay or relayRoller) output to the opposite of its current state.
+
+```js
+var emeter = Shelly.getDevice("x");
+emeter.o1Off = !emeter.o1Off;   // emeter, relay or relayRoller
+```
+
+```js
+var light = Shelly.getDevice("x");
+light.off = !light.off;   // light
+```
+
+### Light
+
+#### `Triggers/Conditions`
+
+#### On
+
+Triggers when the light switches to the on state.
+
+```js
+var light = Shelly.getDevice("x");
+Shelly.setTriggerOnce(light, "on", handler);
+```
+
+#### Off
+
+Triggers when the light switches to the off state.
+
+```js
+var light = Shelly.getDevice("x");
+Shelly.setTriggerOnce(light, "off", handler);
+```
+
+#### Brightness
+
+Starts when the brightness level goes below the specified value.
+
+```js
+var light = Shelly.getDevice("x");
+Shelly.setTriggerOnce(light, "brightness < 70", handler);
+```
+
+#### `Actions`
+
+#### On
+
+Turns the light on.
+
+```js
+var light = Shelly.getDevice("x");
+light.on = true;
+```
+
+#### Off
+
+Turns the light off.
+
+```js
+var light = Shelly.getDevice("x");
+light.off = true;
+```
+
+#### Brightness
+
+Sets the brightness level to the specified percentage.
+
+```js
+var light = Shelly.getDevice("x");
+light.brightness = 40;
+```
+
+#### Temperature
+
+Changes the color temperature to the given Kelvin value.
+
+```js
+var light = Shelly.getDevice("x");
+light.temperature = 4000;
+```
+
+#### White
+
+Adjusts the white channel intensity (same format for red, green, blue).
+
+```js
+var light = Shelly.getDevice("x");
+light.white = 50;
+```
+
+### Relay
+
+#### `Triggers/Conditions`
+
+#### Connected
+
+Fires when the device (relay or relayRoller) becomes connected.
+
+```js
+var relay = Shelly.getDevice("x");
+Shelly.setTriggerOnce(relay, "connected", handler);
+```
+
+#### i1Connected
+
+Fires when the device's (relay or relayRoller) input channel becomes connected.
+
+```js
+var relay = Shelly.getDevice("x");
+Shelly.setTriggerOnce(relay, "i1Connected", handler);
+```
+
+#### i1NotConnected
+
+Fires when the device's (relay or relayRoller) input channel becomes disconnected.
+
+```js
+var relay = Shelly.getDevice("x");
+Shelly.setTriggerOnce(relay, "i1NotConnected", handler);
+```
+
+### Relay Roller
+
+#### `Triggers/Conditions`
+
+#### Open
+
+Fires when the device (relayRoller or door) opens.
+
+```js
+var relayRoller = Shelly.getDevice("x");
+Shelly.setTriggerOnce(relayRoller, "open", handler);
+```
+
+#### Closed
+
+Fires when the device (relayRoller or door) reaches the fully closed position.
+
+```js
+var relayRoller = Shelly.getDevice("x");
+Shelly.setTriggerOnce(relayRoller, "closed", handler);
+```
+
+#### Stop
+
+Fires when the roller stops moving.
+
+```js
+var relayRoller = Shelly.getDevice("x");
+Shelly.setTriggerOnce(relayRoller, "stop", handler);
+```
+
+#### Set Position
+
+Runs when the roller reaches the specified position percentage.
+
+```js
+var relayRoller = Shelly.getDevice("x");
+Shelly.setTriggerOnce(relayRoller, "position == 30", handler);
+```
+
+#### `Actions`
+
+#### Open
+
+Moves the roller to the open position.
+
+```js
+var relayRoller = Shelly.getDevice("x");
+relayRoller.open = true;
+```
+
+#### Closed
+
+Moves the roller to the closed position.
+
+```js
+var relayRoller = Shelly.getDevice("x");
+relayRoller.open = false;
+```
+
+#### Stop
+
+Stops the roller immediately.
+
+```js
+var relayRoller = Shelly.getDevice("x");
+relayRoller.stop = true;
+```
+
+#### Set Position
+
+Sets the roller to the given position percentage.
+
+```js
+var relayRoller = Shelly.getDevice("x");
+relayRoller.position = 45;
+```
+
+### Sensor
+
+#### `Triggers/Conditions`
+
+#### Motion
+
+Fires when the sensor detects motion.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "motion", handler);
+```
+
+#### No Motion
+
+Fires when the sensor reports that no motion is detected.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "noMotion", handler);
+```
+
+#### Tilt
+
+Runs when the tilt angle reaches the specified value.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "tilt == 60", handler);
+```
+
+#### Temperature
+
+Starts when the sensor’s temperature reaches the specified value.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "temperature == 23", handler);
+```
+
+#### Humidity
+
+Starts when the humidity level goes below the given percentage.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "humidity < 50", handler);
+```
+
+#### Illuminance
+
+Triggers when the measured light level differs from the specified value.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "illuminance != 40", handler);
+```
+
+#### Flood
+
+Fires when the sensor detects the presence of water.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "flood", handler);
+```
+
+#### No Flood
+
+Fires when the sensor reports that no water is detected.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "noFlood", handler);
+```
+
+#### Smoke
+
+Triggers when smoke is detected by the sensor.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "smoke", handler);
+```
+
+#### No Smoke
+
+Runs when the sensor confirms that smoke is no longer present.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "noSmoke", handler);
+```
+
+#### Gas
+
+Fires when the sensor detects the presence of gas.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "gas", handler);
+```
+
+#### No Gas
+
+Triggers when the sensor reports that no gas is detected.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "noGas", handler);
+```
+
+#### Gas Concentration
+
+Runs when the measured gas concentration differs from the specified value.
+
+```js
+var sensor = Shelly.getDevice("x");
+Shelly.setTriggerOnce(sensor, "gasConcentration != 50", handler);
+```

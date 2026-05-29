@@ -1,0 +1,10 @@
+{
+  "label": "Combined automations",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "title": "Common examples with combined automations",
+    "description": "Some of the commonly used scripts are included here."
+  },
+  "className": "hidden"
+}

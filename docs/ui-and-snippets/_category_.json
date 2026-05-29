@@ -1,0 +1,9 @@
+{
+  "label": "UI and snippets",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "title": "UI overview",
+    "description": "This section provides visual examples and screenshots of the Shelly interface to help you understand how different parts of the platform look and work. It includes images of the script editor, snippets, scene creation tools, virtual devices, and ID retrieval screens. Use this section whenever you need a quick visual reference while building or managing your automations."
+  }
+}

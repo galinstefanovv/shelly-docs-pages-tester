@@ -1,0 +1,53 @@
+---
+sidebar_position: 1
+id: virtual-devices-editor
+title: How to use virtual devices?
+sidebar_label: Using virtual devices
+---
+
+A **virtual device** is a software‑based device that lives inside a physical Shelly device. It behaves like a normal device, but all of its states and controls exist only in software. This makes it possible to create automations that use custom values or logic that do not come from real sensors or relays. Virtual devices are groups of **virtual properties (components)** attached to a physical device.
+
+A **virtual component** is an individual property created inside a device. It has no physical representation, but it can be added through the device interface and updated by a script running on that device. Virtual components can store numbers, booleans, text values, button controls and enums. They are useful for keeping script data and sharing values between script runs.
+
+Virtual components can be organized into **virtual groups**. A virtual group is a named container that contains multiple virtual components into one structured set. Groups help keep related logic together, make the UI cleaner and can optionally be exposed as a virtual device for easier use.
+
+:::important
+To use virtual components, they must first be created and placed inside a group.
+:::
+
+Each Shelly device can have up to 10 virtual components (IDs 200 - 299) and these components extend the device with new properties defined by the user.
+
+```javascript
+var button = Virtual.getDevice("x_201"); // x is your ID
+```
+
+For more details about how virtual components work, see this <a href="https://shelly-api-docs.shelly.cloud/gen2/DynamicComponents/Virtual/" target="_blank"><strong>documentation</strong></a>.
+
+:::note
+**Virtual properties** make it possible to store custom states, trigger actions or pass information between different parts of your automation logic.
+:::
+
+Virtual devices are used to:
+
+- Represent modes (e.g., Home, Away, Armed, Disarmed).
+- Store logical states that automations can read or modify.
+- Expose script‑controlled values (booleans, numbers, buttons) as if they were real devices.
+- Interact with Scenes, Groups and Scripts just like physical devices.
+
+## Example
+
+import HomeAway from "../../../appendix/examples-list/virtual-devices/homeaway-ac-off.mdx";
+
+<HomeAway />
+
+## More examples
+
+- **[Virtual boolean group](https://docs.sp.infn.dev/appendix/examples-list/virtual-devices/virtual-boolean-group)**
+- **[Virtual button group](https://docs.sp.infn.dev/appendix/examples-list/virtual-devices/virtual-button-group)**
+- **[Virtual enum group](https://docs.sp.infn.dev/appendix/examples-list/virtual-devices/virtual-enum-group)**
+- **[Virtual number group](https://docs.sp.infn.dev/appendix/examples-list/virtual-devices/virtual-number-group)**
+- **[Virtual text group](https://docs.sp.infn.dev/appendix/examples-list/virtual-devices/virtual-text-group)**
+- **[Virtual conditions check](https://docs.sp.infn.dev/appendix/examples-list/virtual-devices/virtual-conditions-check)**
+- **[Automatically control AC](https://docs.sp.infn.dev/appendix/examples-list/virtual-devices/automatically-control-ac)**
+
+For creation through the UI, see this **[page](https://docs.sp.infn.dev/ui-and-snippets/virtual-devices/virtual-device-editor#adding-a-property)**.

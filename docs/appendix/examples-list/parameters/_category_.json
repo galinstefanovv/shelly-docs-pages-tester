@@ -1,0 +1,10 @@
+{
+  "label": "Parameters",
+  "position": 11,
+  "link": {
+    "type": "generated-index",
+    "title": "Common examples with Parameters",
+    "description": "Some of the commonly used scripts are included here."
+  },
+  "className": "hidden"
+}

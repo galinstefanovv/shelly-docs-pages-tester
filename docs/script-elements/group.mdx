@@ -1,0 +1,36 @@
+---
+sidebar_position: 8
+id: group
+title: What are Device Groups?
+sidebar_label: Device Groups
+---
+
+A Device Group is a special object created only through the UI, allowing multiple devices of the same type to be controlled as one. Device groups are not part of the scripting and cannot be created through scripts. Once a device group exists, you can use it in the editor and control it through scripting.
+
+**Device Groups support three types:**
+
+- **light**
+- **relay**
+- **roller**
+
+To access a device group, you create a variable and pass the device group ID inside `getGroup()`.
+
+- The device group ID is an integer (1,2,3,...), unlike device IDs which are strings.
+- A device group contains devices of the same type (switches/relays), so one command (ON/OFF) applies consistently to all members.
+- Use device groups to avoid repeating the same action across many devices and keep scripts simpler.
+
+```js
+var lights = Shelly.getGroup(xxx);
+```
+
+:::info
+See the full list of available device group actions [here](https://docs.sp.infn.dev/actions/group-action/)
+:::
+
+## Example
+
+import MotionActivated from "../appendix/examples-list/groups/motion-activated-lights-dark.mdx";
+
+<MotionActivated />
+
+For creation through the UI, see this **[page](https://docs.sp.infn.dev/ui-and-snippets/script-editor/snippets/#device-groups)**.

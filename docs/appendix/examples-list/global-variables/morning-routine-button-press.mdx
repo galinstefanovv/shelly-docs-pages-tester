@@ -1,0 +1,17 @@
+---
+sidebar_position: 1
+id: morning-routine-button-press
+title: Morning routine with button press
+sidebar_label: Morning routine with button press
+---
+
+In this script, you can start a morning routine using a button that controls it. The first press in the morning turns on the lights, the second starts the coffee machine and the third turns everything off. Then, you can start the same routine again.
+
+```js title="morning-routine-button-press.js" file=../../../scripts/morning-routine-button-press.js
+
+```
+Here we use a global variable that helps the script to be restarted. In other words, after the desired actions are executed sequentially, we can execute them again and again in the same sequence.
+The global variable is used as a condition for each action, and its value is different for each of them.
+The fact that the variable is global allows us to use its value in other scripts with different triggers and actions, as well as to combine it with different conditions.
+
+---

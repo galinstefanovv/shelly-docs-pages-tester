@@ -1,0 +1,95 @@
+---
+sidebar_position: 1
+id: overview
+title: Script structure
+sidebar_label: Script structure
+---
+
+Shelly scripts follow a clear and modular structure that keeps configuration, logic and triggers well separated. Scripts begin with the following elements, which define the behavior, logic and execution conditions:
+
+- **Parameters** - Limits that determine when certain actions or alerts should be triggered.
+- **Devices** - The hardware or virtual components the script interacts with or monitors. 
+- **Global variables** - Shared values accessible from all scripts for consistent configuration.
+- **Handlers** - JavaScript functions that run when a trigger activates.
+- **Triggers** - Events that initiate script execution.
+
+This structure ensures predictable behavior and easy maintenance.
+
+## Parameters
+
+Scripts sometimes include parameters. They are defined at the top of the script. These parameters are used to configure thresholds, limits or other values that the script will use during execution.
+
+```js
+const params = {
+  maxTemp: 25,
+  minTemp: 22,
+};
+```
+
+## Devices
+
+Under the parameters are defined references for the devices that will be used. These declarations allow the script to interact with relays, sensors, lights and other components. To access a device, its ID must be written as an argument to the `getDevice()`. See how to **[retrieve IDs](https://docs.sp.infn.dev/ui-and-snippets/retrieve-ids-manually/retrieve-ids)**.
+
+```js
+var light = Shelly.getDevice("x"); // Light
+var tempSensor = Shelly.getDevice("y"); // Temperature sensor
+```
+
+### Virtual devices
+
+A virtual device is a software‑based device that lives inside a physical Shelly device. It behaves like a normal device, but all of its states and controls exist only in software. Its definition differs from that of physical devices by using **Virtual** instead of **Shelly**. Read more about **[virtual devices](https://docs.sp.infn.dev/script-elements/devices/virtual-devices/virtual-devices-editor)**.
+
+```js
+var homeaway = Virtual.getDevice("x_200"); // Home Away - virtual device
+```
+
+
+## Global variables
+
+Global variables store state that must persist during script execution. They can be boolean, numeric, string, object or array.
+
+```js
+global.counter = 1;
+global.isEnabled = true;
+```
+
+:::note
+**Parameters** and **global variables** can also be changed via the UI. See this **[page](https://docs.sp.infn.dev/ui-and-snippets/script-editor/parameters/#edit-parameters)** for more information.
+:::
+
+## Event handlers
+
+Handler functions contain the logic that should run when a trigger fires. They are defined before the triggers. Use a named handler when the logic is longer. For short logic, an anonymous function can be used directly inside the trigger.
+
+**Handler functions may include:**
+
+- Additional condition checks (if, else).
+- Device commands.
+- Timers.
+- Logging or state updates.
+
+## Triggers
+
+Triggers are placed after all handler functions. They define when the script should run and can call either:
+
+- Named handler function.
+- Anonymous inline function for short actions.
+
+**Handler**
+
+import TurnOnLight from "../appendix/examples-list/devices/relay/daily-morning-coffee.mdx";
+
+<TurnOnLight />
+
+**Anonymous function**
+
+{/* prettier-ignore-start */}
+
+```js
+var motionSensor = Shelly.getDevice("x"); // Living room motion sensor
+var light = Shelly.getDevice("y"); // Living room light
+
+Shelly.setTriggerOnce(motionSensor, "motion", () => light.on = true);
+```
+
+{/* prettier-ignore-end */}

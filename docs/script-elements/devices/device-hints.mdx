@@ -1,0 +1,134 @@
+---
+title: Device Hints
+sidebar_position: 2
+---
+
+## What to avoid
+
+### Avoid meaningless variable names
+
+A device variable name should tell you what the device is and where it is. A name like `var a` or `var device1` is useless the moment your script grows beyond two lines.
+
+Include the **room** and the **device type** in the name. This makes the script readable without having to cross-reference the UI.
+
+**Instead of:**
+
+```js
+var a = Shelly.getDevice("x");
+var device1 = Shelly.getDevice("y");
+var s = Shelly.getDevice("z");
+```
+
+**Use this:**
+
+```js
+var bedroomBlind = Shelly.getDevice("x");
+var kitchenLight = Shelly.getDevice("y");
+var hallwayMotionSensor = Shelly.getDevice("z");
+```
+
+---
+
+### Do not use illuminance as a trigger on motion or door sensors
+
+Motion sensors and window/door sensors only update their illuminance value **when the main property changes** — meaning when motion is detected or the door opens/closes. If illuminance in the room changes but no motion or door event happens, the device sends no signal. Using illuminance as a trigger will behave as if both illuminance and the main event fired together — not as a standalone light-level monitor.
+
+**Instead of:**
+
+```js
+// Appears to watch for darkness — but only fires alongside a motion or door event
+Shelly.setTriggerOnAnyChange(motionSensor, "illuminance < 40", function() {
+  light.on = true;
+});
+```
+
+**Use this:**
+
+```js
+// Use motion as the trigger, check illuminance as a condition inside the handler
+function turnOnIfDark() {
+  if (motionSensor.illuminance < 40) {
+    light.on = true;
+  }
+}
+
+Shelly.setTriggerOnce(motionSensor, "motion", turnOnIfDark);
+```
+
+---
+
+### Do not use the timeout parameter on non-relay devices
+
+The `timeout` parameter — which returns a device to its previous state after a set duration — **only works on relay outputs**. Bulbs, lights and other device types do not support it. Using it on an unsupported device will either be ignored or cause an error.
+
+**Instead of:**
+
+```js
+// Will not work — bulbs do not support timeout
+var kitchenBulb = Shelly.getDevice("x");
+
+kitchenBulb.o1On = {
+  value: true,
+  timeout: "10s"
+};
+```
+
+**Use this:**
+
+```js
+// Timeout is valid on relay outputs only
+var officeClima = Shelly.getDevice("x");
+
+officeClima.o1On = {
+  value: true,
+  timeout: "10s"
+};
+```
+
+:::note
+For non-relay devices, handle timed actions with a separate trigger or schedule that explicitly turns the device off.
+:::
+
+---
+
+## Good practices
+
+### Use the device properties page when unsure about a property or action
+
+If you are not sure whether a device supports a specific property, condition or action — or how to write it correctly — check the **[device properties reference](https://docs.sp.infn.dev/script-elements/device-properties)**.
+
+It lists all available properties per device type, their types and valid values.
+
+---
+
+### Use snippets to insert device references, actions and conditions
+
+Instead of typing device variables and conditions from scratch, use the built-in snippet tools in the script editor. They let you:
+
+- Insert a **device reference** (creates the `Shelly.getDevice()` variable for you)
+- Insert a **device action** (sets a property on the device)
+- Insert a **device condition** (reads a property for use in a trigger or handler)
+
+This avoids typos in property names and ensures the correct syntax is used.
+
+
+---
+
+### Group device declarations at the top of the script
+
+Declare all device variables at the beginning of the script, before any functions or triggers. This makes it easy to see which devices the script depends on at a glance and keeps the rest of the script clean.
+
+Always include the **room name** in the variable name. It removes any ambiguity when a script controls devices across multiple rooms — `light` tells you nothing, `bedroomLight` tells you exactly what it is and where it is.
+
+```js
+var bedroomBlind = Shelly.getDevice("x");
+var hallwayMotionSensor = Shelly.getDevice("y");
+var kitchenLight = Shelly.getDevice("z");
+
+function openBlindOnMotion() {
+  bedroomBlind.open = true;
+}
+
+Shelly.setTriggerOnce(hallwayMotionSensor, "motion", openBlindOnMotion);
+```
+

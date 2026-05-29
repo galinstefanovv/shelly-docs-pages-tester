@@ -1,0 +1,9 @@
+{
+  "label": "Devices",
+  "position": 1,
+  "link": {
+    "type": "generated-index",
+    "title": "Devices overview",
+    "description": "A device is a physical Shelly product whose states, measurements and controls can be accessed in a script. Devices provide data and expose properties that can be read, compared or monitored. Scripts use these properties to evaluate current state and run automations. Shelly also supports virtual devices. They are software devices created inside a physical device, used to store custom values or expose logical states, behaving like normal devices."
+  }
+}

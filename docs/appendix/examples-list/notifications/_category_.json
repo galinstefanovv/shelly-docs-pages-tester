@@ -1,0 +1,10 @@
+{
+  "label": "Notifications",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "title": "Common examples with Notifications",
+    "description": "Some of the commonly used scripts are included here."
+  },
+  "className": "hidden"
+}

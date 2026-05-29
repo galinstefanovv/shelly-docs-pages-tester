@@ -1,0 +1,9 @@
+{
+  "label": "Triggers",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "title": "Trigger types overview",
+    "description": "Triggers are essential for running any automation script - without a trigger, a script cannot start. They allow your automation to react to different events, such as device state changes, sensor updates or scheduled times. Each trigger type defines when a script should run, making it possible to respond to many real‑world situations. With triggers, your scripts can automatically react to activity, conditions or time‑based events and perform the actions you need."
+  }
+}

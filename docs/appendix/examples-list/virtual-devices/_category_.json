@@ -1,0 +1,10 @@
+{
+  "label": "Virtual devices",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "title": "Common examples with Virtual devices",
+    "description": "Some of the commonly used scripts are included here."
+  },
+  "className": "hidden"
+}

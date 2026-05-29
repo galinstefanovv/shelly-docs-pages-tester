@@ -1,0 +1,9 @@
+{
+  "label": "Conditions",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "title": "Conditions overview",
+    "description": "A condition is a logical expression that evaluates the state of a device, sensor value or time event and becomes true when its defined rule is met. When the condition turns true, it activates the action part of the scene. Conditions can compare values, detect changes or combine multiple rules using logical operators and they determine exactly when an automation should run."
+  }
+}

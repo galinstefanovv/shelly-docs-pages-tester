@@ -1,0 +1,110 @@
+---
+sidebar_position: 2
+id: trigger-types
+title: Triggers types
+sidebar_label: Triggers types
+---
+
+There are several trigger types that determine how and when a script is activated. These trigger types differ in how they evaluate device states and timing.
+
+The parameter used in trigger creation functions can be either a property name or a simple comparison expression between a property and a constant.
+
+- If you provide only the property name, the trigger activates whenever that property’s value changes.
+- If you provide a comparison expression, the trigger activates only when the condition becomes true.
+- Only basic comparison operators are supported: `==`, `!=`, `<`, `>`, `<=`, `>=`.
+
+### Trigger on any change
+
+`setTriggerOnAnyChange(device, condition, handler)` - Every time the value of the selected property changes and the condition remains valid, the script is re-run.
+
+This script turns on the light whenever the motion sensor’s illuminance value changes and becomes lower than 50. The trigger reacts to every illuminance update and the action runs each time the condition is valid.
+
+```js title="turn-on-light-motion.js" file=../../scripts/turn-on-light-motion.js
+
+```
+
+**Typical use cases:**
+
+- Illuminance rises above a threshold.
+- The temperature is within a certain range.
+- A device reports a particular state.
+
+### Set Trigger once with value
+
+`setTriggerOnce(device, condition, handler)` - When it reaches the desired state, the script is triggered.
+
+import DoorClosedAlarm from "../../appendix/examples-list/alarms/door-closed-alarm.mdx";
+
+<DoorClosedAlarm />
+
+**Typical use cases:**
+
+- Motion detected or motion cleared.
+- Door opened or closed.
+- Relay switched on or off.
+
+### Trigger with timer (hold off)
+
+`setTriggerWithHoldOff(device, condition, holdOff, handler)` - When it transitions to the desired state, a timer is started during which the condition must remain valid for the set duration without changing its state. Timers here can only be in minutes.
+
+This script turns on the ac only if the temperature stays above 25°C for 10 minutes without dropping.
+
+{/* prettier-ignore-start */}
+
+```js title="handler-hold-off.js" file=../../scripts/handler-hold-off.js
+
+```
+
+{/* prettier-ignore-end */}
+
+**Typical use cases:**
+
+- Preventing rapid re-triggering.
+- Avoiding repeated notifications.
+- Rate‑limiting automation execution.
+
+### Repeated Trigger
+
+When it reaches the desired state, the script is triggered and every minute it is checked and triggered again if the condition is still valid.
+
+This script checks the power consumption and sends an alert whenever it goes above 3000 W. As long as the condition stays true, the script will run again every minute and keep sending alerts.
+
+```js title="handler-repeated.js" file=../../scripts/handler-repeated.js
+
+```
+
+**Typical use cases:**
+
+- Continuously adjusting lighting based on illuminance.
+- Monitoring temperature for active regulation.
+- Running logic repeatedly while a sensor value stays above or below a threshold.
+
+### Unified trigger (`setTrigger`)
+
+`setTrigger(options, handler)` - A unified, options-based form for registering any trigger type. The `type` field selects the behavior (`"anyChange"`, `"once"`, `"holdOff"`, `"repeated"`, `"schedule"`, `"timer"`, `"datetime"`, `"solar"`, `"manual"`) and the remaining fields supply the parameters that behavior expects. The handler is passed as a separate second argument.
+
+Use it when you want to build the trigger options dynamically (for example, from script parameters) or when you need to attach a per-trigger `activeTime` window that overrides the scene-wide active time.
+
+{/* prettier-ignore-start */}
+
+```js
+var motion = Shelly.getDevice("x");
+var light = Shelly.getDevice("y");
+
+Shelly.setTrigger({
+  type: "once",
+  device: motion,
+  property: "motion",
+  activeTime: { start: "18:00", duration: "360", days: [1, 2, 3, 4, 5, 6, 7] }
+}, () => { light.on = true; });
+```
+
+{/* prettier-ignore-end */}
+
+**Typical use cases:**
+
+- Selecting the trigger type dynamically from script parameters.
+- Restricting a single trigger to its own active-time window without affecting the rest of the scene.
+- Keeping a consistent options-object style across mixed device, time and solar triggers.
+
+For the full options reference, see **[`Shelly.setTrigger(options, handler)`](https://docs.sp.infn.dev/appendix/api-reference#shellysettriggeroptions-handler)**.

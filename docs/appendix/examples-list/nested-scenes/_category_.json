@@ -1,0 +1,10 @@
+{
+  "label": "Nested Scenes",
+  "position": 12,
+  "link": {
+    "type": "generated-index",
+    "title": "Common examples with Nested Scenes",
+    "description": "Some of the commonly used scripts are included here."
+  },
+  "className": "hidden"
+}

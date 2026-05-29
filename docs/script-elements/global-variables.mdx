@@ -1,0 +1,151 @@
+---
+sidebar_position: 6
+---
+
+# Global Variables
+
+Global Variables are named, persistent values that scripts use to store state and reuse information. They allow automation logic to remember data across script runs which makes them essential for maintaining context, tracking history and implementing logic that depends on previous states.
+
+:::info
+Global Variables are shared across all scripts and are stored in the cloud, allowing different automations to read and update the same state consistently.
+:::
+
+## How Global Variables work
+
+Global Variables follow a four-step lifecycle: **create**, **use**, **check** and **clear**.
+
+:::note
+Global Variables are not accessed through `Shelly.getDevice()` like regular devices.
+They are always referenced directly via the `global` object (`global.<name>`).
+:::
+
+### Creating a variable
+
+Before using a global variable, initialize it safely by checking whether it already exists. This prevents overwriting a stored value on subsequent script runs.
+
+```js
+if (global.consumptionPeaks === undefined) {
+    global.consumptionPeaks = 0;
+}
+```
+
+:::note
+Always guard initialization with an `undefined` check. This ensures the variable is only set once and its value is preserved across runs.
+:::
+
+### Storing complex values
+
+Global variables are not limited to numbers or strings. They can store objects and arrays too.
+
+**Object** - useful when you want to track separate counts per device under one variable:
+
+```js
+if (global.consumptionPeaks === undefined) {
+    global.consumptionPeaks = {
+        officeClima: 0,
+        washingMachine: 0
+    };
+}
+
+global.consumptionPeaks.officeClima++;
+global.consumptionPeaks.washingMachine++;
+```
+
+**Array** - useful when you want to record the actual peak values over time:
+
+```js
+if (global.consumptionPeaks === undefined) {
+    global.consumptionPeaks = [];
+}
+
+global.consumptionPeaks.push(53);
+global.consumptionPeaks.push(111);
+global.consumptionPeaks.push(134);
+// global.consumptionPeaks is now [53, 111, 134]
+```
+
+### Using a variable
+
+Once created, a variable can be read and updated inside any function or trigger. A common pattern is to increment a counter each time an event fires.
+
+```js
+function peaksIncrement() {
+    if (global.consumptionPeaks === undefined) {
+        global.consumptionPeaks = 0;
+    }
+    global.consumptionPeaks++;
+}
+```
+
+### Reading (Get) a variable
+
+Retrieve the current value of a global variable to use it in logic or send it as a notification. Always guard against `undefined` when reading.
+
+```js
+if (global.consumptionPeaks === undefined) {
+    Shelly.sendPhoneStandardNotification("Value is 0", "0");
+} else {
+    Shelly.sendPhoneStandardNotification("Value is " + global.consumptionPeaks, "0");
+}
+```
+
+### Clearing a variable
+
+Reset a variable's value when needed - for example at the end of each day. It is good practice to read the value before clearing it.
+
+```js
+function clearPeaksCount() {
+    var value;
+    if (global.consumptionPeaks === undefined) {
+        value = 0;
+    } else {
+        value = global.consumptionPeaks;
+    }
+    global.consumptionPeaks = 0;
+}
+
+Shelly.setScheduleTrigger("23:59", [1, 2, 3, 4, 5, 6, 7], clearPeaksCount);
+```
+
+## When to use Global Variables
+
+Global Variables are useful in a wide range of automation scenarios, including:
+
+#### State and memory tracking
+
+- armed/unarmed mode.
+- Last motion timestamp.
+- Already executed flag.
+- Last known temperature.
+
+#### Counters and statistics
+
+- Number of activations.
+- Daily usage counters.
+
+#### Configuration values
+
+- Thresholds.
+- Delays.
+
+#### Cooldown Logic
+
+Used to prevent rapid or repeated actions, for example:
+
+- Ensuring an AC cannot be toggled again for 10 minutes.
+
+## Complete example
+
+See the example - **[Peak consumption tracker](https://docs.sp.infn.dev/appendix/examples-list/global-variables/peak-consumption-tracker)**.
+
+## More examples
+
+- **[Morning routine with button press](https://docs.sp.infn.dev/appendix/examples-list/global-variables/morning-routine-button-press/)**
+- **[Motion-activated lights with timer](https://docs.sp.infn.dev/appendix/examples-list/global-variables/motion-activated-lights-timer)**
+- **[Weekend washing machine monitor](https://docs.sp.infn.dev/appendix/examples-list/global-variables/weekend-washing-machine-monitor)**
+- **[Humidifier on every other Wednesday](https://docs.sp.infn.dev/appendix/examples-list/global-variables/humidifier-every-other-wednesday)**
+- **[Door inactivity alert](https://docs.sp.infn.dev/appendix/examples-list/global-variables/door-light-inactivity-alert)**
+- **[Washing machine monitor](https://docs.sp.infn.dev/appendix/examples-list/global-variables/washing-machine-monitor)**
+- **[Garage door control](https://docs.sp.infn.dev/appendix/examples-list/global-variables/garage-door-control)**
+
+For creation through the UI, see this **[page](https://docs.sp.infn.dev/ui-and-snippets/script-editor/snippets/#global-variables)**.

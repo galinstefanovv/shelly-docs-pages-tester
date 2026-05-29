@@ -1,0 +1,12 @@
+---
+sidebar_position: 1
+id: check-battery-status
+title: Check battery status
+sidebar_label: Check battery status
+---
+
+This script sends a notification when the motion sensor battery is below 20% on weekdays between 17:00 and 20:00 (180 minutes). The trigger makes the script re-evaluate whenever the battery property updates. Then, the active time is checked and if the condition is true, an email is sended.
+
+```js title="check-battery-status.js" file=../../../../scripts/check-battery-status.js
+
+```

@@ -1,0 +1,9 @@
+{
+  "label": "Script elements",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "title": "What are Script elements?",
+    "description": "Script elements are blocks you can insert into your script to speed up development and keep your code consistent. Each element provides a predefined structure - such as a device reference, condition, action or global variable - so you don’t have to write it manually. You can add these script elements in the script editor using the 'Snippets' button."
+  }
+}

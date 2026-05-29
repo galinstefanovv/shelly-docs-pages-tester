@@ -1,0 +1,9 @@
+{
+  "label": "Virtual devices",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "title": "Virtual Devices Overview",
+    "description": "Virtual devices are software‑based devices that show states and controls just like physical ones, making it easy to include different types of equipment in your automations and manage everything from one place."
+  }
+}

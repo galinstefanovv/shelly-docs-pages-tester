@@ -1,0 +1,27 @@
+---
+sidebar_position: 3
+---
+
+# Solar Condition
+
+A Solar Condition is a time-based Scene Condition that becomes true relative to the local sunrise or sunset for the home’s configured location. It triggers before or after the selected event (e.g., “10 min before/after sunrise”).
+
+:::note
+Solar Condition is a **premium feature**.
+
+It is a sun event-based trigger using your location.
+:::
+
+## Fields
+
+- `Event` - What solar moment triggers it (sunrise or sunset).
+- `Direction` - Wheter it is _before_ or _after_ a given position of the sun.
+- `Time` - An offset from the event in "HH:mm" format (optional - "0 min before/after" is valid).
+
+## Example
+
+import SunsetLight from "../../appendix/examples-list/time-conditions/sunset-light-routine.mdx";
+
+<SunsetLight />
+
+For creation through the UI, see this **[page](https://docs.sp.infn.dev/ui-and-snippets/script-editor/snippets/#solar-condition)**.

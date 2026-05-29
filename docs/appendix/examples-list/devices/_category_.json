@@ -1,0 +1,10 @@
+{
+  "label": "Devices",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "title": "Common examples with Devices",
+    "description": "Some of the commonly used scripts are included here."
+  },
+  "className": "hidden"
+}

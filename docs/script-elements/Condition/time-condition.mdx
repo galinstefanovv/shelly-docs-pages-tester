@@ -1,0 +1,82 @@
+---
+sidebar_position: 2
+---
+
+# Time Condition
+
+A Time Condition is a built-in check that becomes true only when the current date/time matches the rule you set (time, date, weekdays, etc.). Possible Time Conditions are:
+
+| **Time Condition**                                                | **Definition**                                                                                                     |
+| ----------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **[Check DateTime (dateTime)](#check-datetime)**                  | Returns true when the current moment matches a date/time rule                                                      |
+| **[Check Schedule (time, days)](#check-schedule)**                | Returns true when the current time matches the given HH:MM and today is in the selected days list (e.g., weekdays) |
+| **[Check ActiveTime (start, duration, days)](#check-activetime)** | Returns true if the current time matches the specified time                                                        |
+| **[Get Time ()](#get-time)**                                      | Returns the current date and time in the user's timezone as an object you can compare against in a handler          |
+
+### Check DateTime
+
+Use Check DateTime when you want an action to trigger at a specific date and time - for example, on a holiday or a one-time event. You can add multiple dates as conditions for the same action.
+
+```js
+var condition = Shelly.checkDateTime("2026-02-13 10:30");
+```
+
+### Check Schedule
+
+Use Check Schedule when you want an action to repeat on a specific day and time each week - for example, every Monday morning or every Friday evening. Like Check DateTime, you can combine multiple schedule conditions for the same action.
+
+```js
+var condition = Shelly.checkSchedule("10:00", [6, 7]);
+```
+
+### Check ActiveTime
+
+Use Check ActiveTime when you want to add an extra time condition inside a handler. You define a start time, a duration, and the days when the condition should be active. This check does not apply to the whole script - it is used only inside an if statement in a specific handler.
+
+{/* prettier-ignore-start */}
+
+```js
+var condition = Shelly.checkActiveTime({ start: "22:00", duration: "400", days: [1, 2, 3, 4, 5, 6, 7]});
+```
+
+{/* prettier-ignore-end */}
+
+### Get Time
+
+Use `Shelly.getTime()` when the built-in `checkSchedule`, `checkDateTime` or `checkActiveTime` do not cover the comparison you need - for example, branching on the current hour, day of month or day of week against a script parameter. It returns the current date and time in the user's configured timezone as an object with the fields `hour` (0 - 23), `minute`, `second`, `year`, `month`, `day` and `weekday` (1 = Monday, ..., 7 = Sunday).
+
+```js
+var door = Shelly.getDevice("x");
+var hallwayLight = Shelly.getDevice("y");
+
+Shelly.setTriggerOnce(door, "open", function () {
+  var time = Shelly.getTime();
+  if (time.hour >= 18 || time.hour < 8) {
+    hallwayLight.on = true;
+  }
+});
+```
+
+:::warning
+`checkDateTime`, `checkSchedule`, `checkActiveTime` and `getTime` are always used inside handlers.
+
+They do not trigger the script by themselves - they only return **true** or **false** (or, for `getTime`, the current time object) when evaluated.
+:::
+
+## Example
+
+import HumidifierEveryOtherWednesday from "../../appendix/examples-list/global-variables/humidifier-every-other-wednesday.mdx";
+
+<HumidifierEveryOtherWednesday />
+
+## More examples
+
+- **[Turn on the kitchen light and coffee machine](https://docs.sp.infn.dev/appendix/examples-list/combined-automations/turn-on-kitchen-light-coffee)**
+- **[Scheduled light activation](https://docs.sp.infn.dev/appendix/examples-list/time-conditions/scheduled-light-activation)**
+- **[Blinds staggered close](https://docs.sp.infn.dev/appendix/examples-list/time-conditions/blinds-staggered-close)**
+- **[Kitchen lights hourly on at evening](https://docs.sp.infn.dev/appendix/examples-list/active-time/kitchen-lights-hourly-on-evening)**
+- **[Lights staggered on](https://docs.sp.infn.dev/appendix/examples-list/time-conditions/lights-staggered-on)**
+- **[Full home daily automation](https://docs.sp.infn.dev/appendix/examples-list/multiple-triggers/full-home-daily-automation)**
+- **[Turn off devices on a specific day](https://docs.sp.infn.dev/appendix/examples-list/time-conditions/turn-off-devices-specific-day)**
+
+For creation through the UI, see this **[page](https://docs.sp.infn.dev/ui-and-snippets/script-editor/snippets/#time-conditions)**.

@@ -1,0 +1,128 @@
+---
+sidebar_position: 1
+id: overview
+title: Triggers
+sidebar_label: Triggers
+---
+
+Every Shelly device reports its state changes to the Cloud whenever one of its properties is updated. Triggers listen for these incoming property updates and determine whether an automation should start. When a trigger condition is met, the scene or script is executed immediately based on the new device state.
+
+Triggers are the mechanism that allows Shelly devices and scripts to react automatically to changes in state, sensor readings or scheduled events. They form the entry point of an automation: once a trigger activates, the associated actions or script logic are executed.
+Triggers enable event‑driven behavior such as responding to device activity, monitoring sensor values or running logic at specific times.
+
+:::warning
+A scene needs at least **one trigger**. If no trigger is set, the scene will never run because nothing can start it.
+:::
+
+### Example
+
+import TurnOnLight from "../../appendix/examples-list/devices/sensor/turn-on-light-motion.mdx";
+
+<TurnOnLight />
+
+## Quick reference
+
+| I want the script to run when...                                                     | Type                      |
+| ------------------------------------------------------------------------------------ | ------------------------- |
+| Something changes and I only care about the moment it changes                        | once                      |
+| Something changes and I want it to re-run every time it changes and it is still true | anyChange                 |
+| A condition becomes true and must stay true for N minutes                            | holdOff                   |
+| A condition is true and I want to keep re-checking it every minute                   | repeated                  |
+| Every N minutes                                                                      | timer                     |
+| At a specific time on specific days of the week                                      | schedule                  |
+| At a specific date and time, once                                                    | datetime                  |
+| At sunrise or sunset (with an offset)                                                | solar                     |
+| I trigger it explicitly                                                              | manual                    |
+
+## Trigger behavior
+
+All four trigger types watch a device property, but they differ in when and how often they call the handler.
+
+| Type                   | Fires when                              | Re-fires?                                                                                   |
+| ---------------------- | --------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `once`                 | Condition becomes true                  | Yes — but only after the condition becomes false and true again                             |
+| `anyChange`            | Property changes and condition is valid | Yes — every time the value updates and the condition is still valid                         |
+| `holdOff`              | Condition stays true for N minutes      | Yes — but only after the condition becomes false and then true again for the desired period |
+| `repeated`             | Condition is true                       | Yes — immediately and every minute while it stays true                                      |
+
+Triggers are evaluated independently. If a scene contains multiple triggers, the scene will run when any one of them activates unless additional conditions are configured.
+
+## Handlers
+
+A handler is a JavaScript function that runs when a trigger activates. Handlers help with organizing the automation logic into separate blocks.
+
+### Why Handlers are used
+
+**They are used for the following reasons:**
+
+- Combine several different automations inside one script.
+- Keep logic separated and easier to understand.
+- Reuse the same function for multiple triggers.
+- Build more advanced logic without repeating code.
+- Add conditions that does not trigger, but only check device states, time conditions, etc.
+
+Handlers are especially useful when a script contains multiple triggers or multiple devices. For more advanced scripts, handlers make the structure cleaner and easier to maintain.
+
+### How Handlers work
+
+- They must be named functions.
+- They do not accept arguments.
+- They can access devices, variables and state directly.
+
+A handler is a function that the trigger calls when it fires.
+
+#### Example
+
+import SensorsTurnOnDevices from "../../appendix/examples-list/devices/sensor/sensors-turn-on-devices.mdx";
+
+<SensorsTurnOnDevices />
+
+#### Best practices
+
+- Use descriptive handler names (e.g., handleDoorClosed, handleHighTemp).
+- Keep handler logic short.
+- Avoid complex conditions inside handlers.
+- Use handlers consistently across all scripts.
+
+### Anonymous functions
+
+Anonymous functions are functions without a name. They are defined inline and used directly where they are needed - most commonly inside triggers. Instead of declaring a separate function and referencing it, you write the function body directly in place.
+
+Anonymous functions are useful when the logic is short, used only once and does not need to be reused elsewhere in the script. They help keep the code compact and make the trigger’s behavior easy to read.
+
+#### Example
+
+The trigger runs the function whenever the sensor value changes and the function contains the logic that turns on the lights when motion is detected.
+
+{/* prettier-ignore-start */}
+
+```js title="anonymous-short-syntax.js" file=../../scripts/anonymous-short-syntax.js
+
+```
+
+{/* prettier-ignore-end */}
+
+When the main door is opens, the function sends a notification.
+
+```js title="anonymous-long-syntax.js" file=../../scripts/anonymous-long-syntax.js
+
+```
+
+## Best practices
+
+- Choose the simplest trigger type that matches the automation requirement.
+- Use hold-off triggers to prevent excessive firing from rapidly changing sensors.
+- Avoid unnecessary repeated triggers to reduce processing load.
+- Use descriptive device names and property identifiers to maintain clarity in scripts.
+
+## More examples
+
+- **[Evening routine](https://docs.sp.infn.dev/appendix/examples-list/multiple-triggers/evening-routine)**
+- **[Comfort home automation](https://docs.sp.infn.dev/appendix/examples-list/multiple-triggers/comfort-home-automation)**
+- **[Automatically control AC](https://docs.sp.infn.dev/appendix/examples-list/virtual-devices/automatically-control-ac)**
+- **[Cooling the room on sunny days](https://docs.sp.infn.dev/appendix/examples-list/combined-automations/cooling-on-sunny-days)**
+- **[Car charge status](https://docs.sp.infn.dev/appendix/examples-list/notifications/car-charge-status)**
+- **[Full home daily automation](https://docs.sp.infn.dev/appendix/examples-list/multiple-triggers/full-home-daily-automation)**
+- **[Bedroom temperature AC control](https://docs.sp.infn.dev/appendix/examples-list/parameters/bedroom-temp-ac-control)**
+
+For creation through the UI, see this **[page](https://docs.sp.infn.dev/ui-and-snippets/script-editor/snippets/#triggers)**.

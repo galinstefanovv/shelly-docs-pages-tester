@@ -1,0 +1,9 @@
+{
+  "label": "Appendix",
+  "position": 18,
+  "link": {
+    "type": "generated-index",
+    "title": "Additional reference materials",
+    "description": "This section contains all extra information that is not directly related to how the scripts work. It includes notes, explanations and other helpful details that support understanding but are not part of the main scripting logic."
+  }
+}

@@ -1,0 +1,24 @@
+---
+sidebar_position: 2
+---
+
+# Device Actions
+
+Device Actions are automation rules that execute one or more operations when a specific event or condition occurs on a device. They allow you to build flexible automation logic by combining triggers and actions.
+Device actions can control individual devices, device groups, scenes, alarms or notifications. Each action type has its own behavior and parameters.
+
+## Examples
+
+import ScheduledLight from "../appendix/examples-list/time-conditions/scheduled-light-activation.mdx";
+
+<ScheduledLight />
+
+:::info
+You can toggle a device state by assigning the opposite of its current value. For example:
+
+`colorLight.on = !colorLight.on`
+
+This flips the state every time it runs - if the light is on, it will turn off; if it’s off, it will turn on.
+:::
+
+For creation through the UI, see this **[page](https://docs.sp.infn.dev/ui-and-snippets/script-editor/snippets/#device-action)**.

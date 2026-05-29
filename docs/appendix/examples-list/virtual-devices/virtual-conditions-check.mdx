@@ -1,0 +1,36 @@
+---
+sidebar_position: 7
+id: virtual-conditions-check
+title: Virtual Conditions check
+sidebar_label: Virtual Conditions check
+---
+
+Executes an action only when all virtual inputs meet their required values.
+
+```js title="virtual-conditions-check.js" file=../../../scripts/virtual-conditions-check.js
+
+```
+
+The script listens for changes across four different virtual devices: a text field, a number field, a boolean and a virtual button. Each trigger fires once when its specific condition becomes true. When all conditions are satisfied at the same time, the script performs an action.
+
+### Initialization
+
+- `setTriggerOnce(myTextGroup, "mytext == Test", handler)` - Activates when the text value becomes "Test".
+- `setTriggerOnce(myNumberGroup, "mynumber > 17.0", handler)` - Activates when the number exceeds 17.0.
+- `setTriggerOnce(myboolean, "trueFalse == true", handler)` - Activates when the boolean becomes true.
+- `setTriggerOnce(button, "testVirtualButton == pressedThreeTimes", handler)` - Activates when the virtual button is pressed three times.
+
+### Condition evaluation
+
+The script checks whether all of the following are true:
+
+- The text value equals "Test".
+- The number is greater than 17.0.
+- The boolean is true.
+- The button has been pressed three times.
+
+The script runs the action only when all conditions are true.
+
+### Action
+
+When the combined condition is satisfied, the script logs an activity entry ("1s"), confirming that all required triggers are met.
